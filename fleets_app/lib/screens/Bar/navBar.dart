@@ -1,3 +1,5 @@
+import 'package:fleets_app/screens/home/home_fleets.dart';
+import 'package:fleets_app/screens/profil/profil.dart';
 import 'package:flutter/material.dart';
 
 
@@ -19,9 +21,15 @@ class _NavBarState extends State<NavBar> {
       print("tu es déjà sur cette page");
     } else {
     if (index == 0) {
-    Navigator.of(context).pushReplacementNamed('/Profil');
+    Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Profil(name: "Amine Ach")),
+            );
     } else if (index == 1) {
-    Navigator.of(context).pushReplacementNamed('/Profil');
+    Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Homefleets()),
+            );
     }
     else if (index == 2) {
     Navigator.of(context).pushReplacementNamed('/Messages');

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class Profil extends StatefulWidget {
+  final String name;
+  const Profil({ Key key, this.name,}) : super(key: key);
   @override
   _ProfilState createState() => _ProfilState();
 }
@@ -39,7 +41,7 @@ class _ProfilState extends State<Profil> {
                         fit: BoxFit.cover,
                       ),
                       Text(
-                        "Amine Ach",
+                        widget.name,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 30,

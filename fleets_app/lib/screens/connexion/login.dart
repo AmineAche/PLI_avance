@@ -1,11 +1,15 @@
 import 'dart:convert';
+import 'package:fleets_app/models/user_model.dart';
 import 'package:fleets_app/screens/intro_app/welcome.dart';
+import 'package:fleets_app/screens/profil/profil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+
+import '../constants.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -15,7 +19,7 @@ class Login extends StatefulWidget {
 class Token {
   Token(this.bearer);
   final String bearer;
-  }
+}
 
 class _LoginState extends State<Login> {
   TextEditingController email = new TextEditingController();
@@ -211,8 +215,7 @@ class _LoginState extends State<Login> {
             onPressed: () {
               //register(email.text, password.text);
               //Navigator.of(context).pushReplacementNamed('/Register');
-              login(
-              email.text, password.text);
+              login(email.text, password.text);
               //Navigator.of(context).pushReplacementNamed('/Profil');
             },
             padding: EdgeInsets.all(15),
@@ -261,9 +264,9 @@ class _LoginState extends State<Login> {
       ),
     );
   }
+
   login(String email, password) async {
-    if ((email == "") ||
-        (password == "")) {
+    if ((email == "") || (password == "")) {
       showTopSnackBar(
         context,
         CustomSnackBar.info(
@@ -271,11 +274,12 @@ class _LoginState extends State<Login> {
         ),
       );
     } else {
-var data = {
-          'email': email,
+      var data = {
+        'email': email,
         'password': password,
       };
-      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+      SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
 
       // var jsonData = null;
       // SharedPreferences sharedPreferences =
@@ -287,6 +291,7 @@ var data = {
         },
         body: jsonEncode(data),
       );
+      var nom;
       print(response.body);
       var ok = response.body;
       if (response.statusCode == 200) {
@@ -295,8 +300,27 @@ var data = {
         String bearer = map['token'];
         Token token = Token(bearer);
         print(token.bearer);
+        if (token.bearer != null) {
+          var actualToken = token.bearer;
+          var response = await http.get(
+            Uri.parse("http://$ip:8000/api/user/self"),
+            headers: {
+              "Content-Type": "application/json",
+              'Authorization': 'Bearer $actualToken',
+            },
+          );
+          print(response.body);
+          User user = User.fromJson(jsonDecode(response.body));
+          print(user.id);
+          nom = user.firstname + " " + user.lastname;
+        }
         setState(
           () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Profil(name: nom)),
+            );
+          
             //isLoading = false;
             //sharedPreferences.setString('token', jsonData['token']);
             //Navigator.of(context).pushReplacementNamed('/HomePage');

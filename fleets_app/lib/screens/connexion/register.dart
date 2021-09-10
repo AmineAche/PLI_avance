@@ -6,6 +6,8 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+import '../constants.dart';
+
 class Register extends StatefulWidget {
   @override
   _RegisterState createState() => _RegisterState();
@@ -309,7 +311,7 @@ class _RegisterState extends State<Register> {
       // SharedPreferences sharedPreferences =
       //     await SharedPreferences.getInstance();
       var response = await http.post(
-        Uri.parse("http://192.168.56.1:8000/api/register"),
+        Uri.parse("http://$ip:8000/api/register"),
         headers: {
           "Content-Type": "application/json",
         },

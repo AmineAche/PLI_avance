@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:fleets_app/screens/home/home_fleets.dart';
 import 'package:fleets_app/screens/intro_app/call_contact_accept.dart';
 import 'package:fleets_app/screens/intro_app/first_step.dart';
 import 'package:fleets_app/screens/intro_app/localisation.dart';
@@ -17,6 +18,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 // }
 void main() {
   runApp(new MaterialApp(
+    debugShowCheckedModeBanner: false,
     home: new MyApp(),
     routes: {
       '/HomePage': (context) => new Login(),
@@ -24,6 +26,7 @@ void main() {
       '/WelcomePage': (context) => new Welcome(),
       '/Profil': (context) => new Profil(),
       '/Messages': (context) => new Messages(),
+      '/Home_fleets': (context) => new Homefleets(),
       
       // Pages d accueil
       '/Fleets?': (context) => new WhatisFleets(),
@@ -55,12 +58,12 @@ class _MyAppState extends State<MyApp> {
   }
 
   void navigationPageHome() {
-    Navigator.of(context).pushReplacementNamed('/HomePage');     //If Not first time launch app
+    Navigator.of(context).pushReplacementNamed('/HomePage');     //If Not first time
   }
 
   void navigationPageWel() {
 
-    Navigator.of(context).pushReplacementNamed('/WelcomePage');   // if first time launch app
+    Navigator.of(context).pushReplacementNamed('/WelcomePage');   // if first time
   }
 
   @override
@@ -71,7 +74,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(child: Text("oe")),
+      body: Container(child: Text(" ")),
     );
   }
 }
